@@ -1,11 +1,13 @@
 "use client"
+import { postSingleProduct } from "@/app/actions/postSingleProduct";
 import { useSession, signIn } from "next-auth/react"
+import { useRouter } from "next/navigation";
 import { useState } from "react"
 
 export default function AddProductPage() {
   const { data: session, status } = useSession();
-  const [loading, setLoading] = useState(false)
-    
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
   console.log("Session:", session, "Status:", status);
   // Check the status
   if (status === "loading") {
@@ -31,13 +33,15 @@ export default function AddProductPage() {
       description: form.description.value,
       price: form.price.value,
     }
-    await fetch("/api/products", {
-      method: "POST",
-      body: JSON.stringify(product),
-    })
+    const data = await postSingleProduct(product);
     setLoading(false)
-    alert("Product added successfully!")
-    form.reset()
+    if (data.success) {
+      alert("Product added successfully!")
+      form.reset()
+    } else {
+      alert("Failed to add product")
+    }
+      router.push(`/products`);
   }
 
   return (

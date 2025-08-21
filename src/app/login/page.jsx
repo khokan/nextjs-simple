@@ -15,7 +15,7 @@ export default function LoginPage() {
         className="btn"
         onClick={() => signIn("credentials", { email: "test@test.com", password: "123456", callbackUrl: "/products" })}
       >
-        Demo Login
+        Login
       </button>
     </div>
   )

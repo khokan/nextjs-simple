@@ -1,14 +1,12 @@
+import { getProducts } from "@/app/actions/getProductsPage";
+import { ObjectId } from "mongodb";
 import { notFound } from "next/navigation"
 
-const products = [
-  { id: 1, name: "Laptop", description: "High-performance laptop", price: 1000 },
-  { id: 2, name: "Phone", description: "Smartphone with great camera", price: 600 },
-]
+export default async function ProductDetail({ params }) {
+  const p = await params;
+  const product = await getProducts(p.id);
 
-export default function ProductDetail({ params }) {
-  const product = products.find((p) => p.id === Number(params.id))
   if (!product) return notFound()
-
   return (
     <div className="p-8">
       <h1 className="text-3xl">{product.name}</h1>
