@@ -1,6 +1,5 @@
+import dbConnect from "@/lib/db";
 import { ObjectId } from "mongodb";
-
-const { default: dbConnect } = require("@/lib/dbConnect");
 
 export const getProducts = async (id) => {
   try {
